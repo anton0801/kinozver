@@ -17,6 +17,7 @@
           crossorigin="anonymous">
     <link href="/css/style.css" type="text/css" rel="stylesheet"/>
     {{--    <link href="https://fonts.googleapis.com/css?family=Play:400,700&amp;subset=cyrillic" rel="stylesheet">--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body
     style="background: url('https://mocah.org/uploads/posts/318184-Avengers-Endgame-Thanos-4K.jpg') center top fixed no-repeat">
@@ -31,14 +32,14 @@
                     <a class="slider__btn btn-next"></a>
                     <div class="slider-track">
                         @foreach($top_movies as $top_movie)
-                            <a href="{{ route("show.movie", $top_movie["kinopoisk_id"]) }}"
-                               class="best_movies-item-wr slider-item" title="{{ $top_movie["info"]["rus"] }}">
+                            <a href="{{ route("show.movie", $top_movie->kinopoisk_id) }}"
+                               class="best_movies-item-wr slider-item" title="{{ $top_movie->title }}">
                                 <div class="best_movies-item img-box with-mask">
                                     <img
-                                        src="{{ $top_movie["info"]["poster"] }}"
-                                        alt="Фото {{ $top_movie["info"]["rus"] }}">
+                                        src="{{ $top_movie->poster }}"
+                                        alt="Фото {{ $top_movie->title }}">
                                     <div class="img__overlay"><span class="fa fa-play"></span></div>
-                                    <div class="short-meta short-meta-movie-qual">{{ $top_movie["quality"] }}</div>
+                                    <div class="short-meta short-meta-movie-qual">{{ $top_movie->quality }}</div>
                                     <div class="short-meta short-meta-license">Лицензия</div>
                                 </div>
                             </a>
@@ -49,11 +50,11 @@
         </div>
         <div class="menu">
             <a href="/" class="menu_item active">Главная</a>
-            <a href="/" class="menu_item">Новинки</a>
-            <a href="/" class="menu_item">Фильмы</a>
-            <a href="/" class="menu_item">Сериалы</a>
-            <a href="/" class="menu_item">Мультфильмы</a>
-            <a href="/" class="menu_item">Документальные</a>
+            <a href="{{ route("search.filter", "новинки") }}" class="menu_item">Новинки</a>
+            <a href="{{ route("search.filter", "film") }}" class="menu_item">Фильмы</a>
+            <a href="{{ route("search.filter", "serial") }}" class="menu_item">Сериалы</a>
+            <a href="{{ route("search.filter", "мультфильм") }}" class="menu_item">Мультфильмы</a>
+            <a href="{{ route("search.filter", "боевик") }}" class="menu_item">Боевики</a>
             <!-- <div class="share-box">
 			    <div class="ya-share2 ya-share2_inited" data-services="vkontakte,facebook,odnoklassniki,twitter" data-counter="">
                     <div class="ya-share2__container ya-share2__container_size_m">
@@ -81,22 +82,28 @@
                         </ul>
                     </div>
                 </div>
+            </div>
             </div> -->
-            <!-- </div> -->
         </div>
         <main>
             @yield("content")
         </main>
-
+        <aside>
+        </aside>
+        @include("auth.login")
+        @include("parts.footer.index")
     </div>
-    <aside>
-    </aside>
-    @include("parts.footer.index")
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- firebase -->
+{{--<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>--}}
+{{--<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>--}}
+{{--<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-auth.js"></script>--}}
+{{--<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>--}}
+{{--<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>--}}
+
 <script src="/js/firebase.js" crossorigin async></script>
-<script src="/js/slider.min.js" crossorigin async></script>
-{{--<script src="{{ asset("js/main.js") }}"></script>--}}
+<script src="/js/slider.js" crossorigin async></script>
+<script src="{{ asset("js/main.js") }}"></script>
 </body>
 </html>

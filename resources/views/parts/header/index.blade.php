@@ -3,8 +3,8 @@
 
         @guest
             <div class="login not--logged">
-                <div class="btn-login">Авторизация</div>
-                <a href="#">Регистрация</a>
+                <div class="btn-login" id="btn_login">Авторизация</div>
+                <a href="{{ route("register") }}">Регистрация</a>
             </div>
         @endguest
         @auth

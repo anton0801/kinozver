@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [\App\Http\Controllers\HomeController::class, "home"])->name("home");
 Route::get("/show/movie/{kp_id}", [\App\Http\Controllers\ShowController::class, "show"])->name("show.movie");
 Route::get("/search", [\App\Http\Controllers\SearchController::class, "search"])->name("search");
+Route::get("/{genre}", [\App\Http\Controllers\SearchController::class, "filter"])->name("search.filter");
+
+Auth::routes();
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

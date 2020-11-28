@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class SearchController extends Controller
 {
@@ -11,14 +14,13 @@ class SearchController extends Controller
     {
         if (mb_strlen($request->q) >= 1) {
             $movies = $this->getMoviesBySearch($request->q);
-            $movie_count = sizeof($movies);
-//            if ($movie_count == 1) {
-//                $isSerial = $movies[0]["serial"] == "1";
-//                return redirect(route("show." . $isSerial ? "serial" : "movie", ["kp_id" => $movies[0]["kinopoisk_id"]]));
-//            }
+            $movie_count = $movies->total();
+            if ($movie_count == 1) {
+                return redirect(route("show.movie", ["kp_id" => $movies[0]->kinopoisk_id]));
+            }
             if ($movie_count == 1)
                 $message = "По Вашему запросу найден " . $movie_count . " ответ";
-            else if ($movie_count >= 2 && count($movies) <= 5)
+            else if ($movie_count >= 2 && $movies->count() <= 5)
                 $message = "По Вашему запросу найдено " . $movie_count . " ответа";
             else if ($movie_count > 5) {
                 if ($movie_count % 2 == 0)
@@ -35,13 +37,23 @@ class SearchController extends Controller
     }
 
     /**
-     * в этом методе сделать фильтрацию фильмов по жанрам, годам, годом, режисерам и т.д
+     * в этом методе сделать фильтрацию фильмов по жанрам, годам, режисерам и т.д
      * параметры брать из get параметров если они есть
-     * @param Request $request
+     * @param $genre
+     * @return Application|Factory|View
      */
-    public function filter(Request $request)
+    public function filter($genre)
     {
-
+        if ($genre == "film") {
+            $movies = $this->getMovies("film");
+        } else if ($genre == "serial") {
+            $movies = $this->getMovies("serial");
+        } else if ($genre == "новинки") {
+            $movies = $this->getNewMovies();
+        } else {
+            $movies = $this->getMoviesByCategory($genre);
+        }
+        return view("home", compact("movies"));
     }
 
 }

@@ -14,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get("/home-app", [\App\Http\Controllers\ApiController::class, "home"])->name("api.home");
+Route::get("/search", [\App\Http\Controllers\ApiController::class, "search"])->name("api.search");
+Route::get("/add-like-movie", [\App\Http\Controllers\ApiController::class, "addLikeMovie"])->name("api.addLikeMovie");

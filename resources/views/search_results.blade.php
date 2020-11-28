@@ -24,22 +24,23 @@
     @if(isset($movies))
         <div class="movies">
             <div class="list__movies-search">
-                @foreach($movies["results"] as $movie)
-                    <a href="#" class="search__movie clearfix">
+                @foreach($movies as $movie)
+                    <a href="{{ route("show.movie", $movie->kinopoisk_id) }}" class="search__movie clearfix">
                         <div class="movie__wrapper">
                             <div class="search__image">
                                 <div
-                                    class="movie__date">{{ /* getTime($movie["date"]) */ date("d-m-yy", $movie["date"]) }}</div>
-                                <img src="{{ $movie["info"]["poster"] }}" alt="Фото {{ $movie["info"]["rus"] }}">
+                                    class="movie__date">{{ date("d-m-yy", $movie->date) }}</div>
+                                <img src="{{ $movie->poster }}" alt="Фото {{ $movie->title }}">
                             </div>
                             <div class="search__movie-info">
-                                <h2>{{ $movie["info"]["rus"] }}</h2>
-                                <span class="movie__description">{{ $movie["info"]["description"] }}</span>
+                                <h2>{{ $movie->title }}</h2>
+                                <span class="movie__description">{{ $movie->description }}</span>
                             </div>
                         </div>
                     </a>
                 @endforeach
             </div>
+            {{ $movies->links("parts.paginator") }}
         </div>
     @endif
 

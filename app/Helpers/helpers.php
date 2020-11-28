@@ -2,13 +2,32 @@
 
 function getTime($movie)
 {
-    if (isset($movie["info"]["premiere"]) && $movie["info"]["premiere"] == "") {
+    if (!isset($movie->premiere) && $movie->premiere == "") {
         $months = array(0 => "январь", 1 => "февраль", 2 => "март", 3 => "апрель", 4 => "май", 5 => "июнь", 6 => "июль", 7 => "август", 8 => "сентябрь",
             9 => "октябрь", 10 => "ноябрь", 11 => "декабрь");
-        $time = date("d", $movie["date"]) . " " . $months[date("m", $movie["date"])] . " " . date("yy", $movie["date"]);
+        $date = $movie->date;
+        $time = date("d", $date) . " " . $months[date("m", $date)] . " " . date("yy", $date);
     } else
-        $time = $movie["info"]["premiere"];
+        $time = $movie->premiere;
     return $time;
+}
+
+function getGenres($movie) {
+    $genres = explode(",", $movie->genre);
+    $result = array();
+    foreach ($genres as $genre)
+        $result[] = "<a href=\"/$genre\">$genre</a>";
+    $genres = $result;
+    return $genres;
+}
+
+function getActors($movie) {
+    $actors = explode(",", $movie->actors);
+    $result = array();
+    foreach ($actors as $actor)
+        $result[] = "<a href=\"/actor/$actor\">$actor</a>";
+    $actors = $result;
+    return $actors;
 }
 
 function getUsersInOnline()
