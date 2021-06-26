@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{OwlCarousel2, all, firebase-analytics, firebase-app, firebase-auth, firebase-database, firebase-storage, jquery, slick, swiper}" />
+    <file url="PROJECT" libraries="{@editorjs, ckeditor, slick-carousel}" />
   </component>
 </project>

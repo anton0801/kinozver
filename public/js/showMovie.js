@@ -3,30 +3,36 @@ let desc = document.querySelector(".mtext"),
     moreLink = document.querySelector(".more-link"),
     fullText = desc.textContent,
     fullLength = fullText.length,
-    fullHeight = desc.style.height
+    fullHeight = $(".mtext").height()
 
 moreLink.style.opacity = 0
 
 if (fullLength > 250) {
     moreLink.style.opacity = 1
     desc.textContent = desc.textContent.slice(0, 250)
-    desc.style.height = "70px"
+    // desc.style.height = "70px"
     let isOpen = false
     moreLink.addEventListener("click", function (e) {
         e.preventDefault()
         if (isOpen) {
             moreLink.textContent = "...Подробнее"
-            desc.textContent = desc.textContent.slice(0, 250)
-
-            desc.animate({height: fullHeight}, 300)
-            desc.style.animation = "hideText .5s linear"
-            desc.style.height = "70px"
+            $(".mtext").animate({
+                height: "70px"
+            }, 400)
+            setTimeout(() => {
+                desc.textContent = desc.textContent.slice(0, 250)
+            }, 400)
             isOpen = false
         } else {
             moreLink.textContent = "Скрыть"
-            desc.style.animation = "showText .4s linear"
+
+            $(".mtext").animate({
+                height: fullHeight + 60
+            }, 400)
+
+            console.log(fullHeight)
+
             desc.textContent = fullText
-            desc.style.height = fullHeight
             isOpen = true
         }
     })
@@ -42,7 +48,7 @@ btn_scroll.click(function () {
     })
 })
 
-// replace plaer
+// replace player
 
 // сделать нормальое переключение плеера
 // там нужно проверять у какого плеера класс visible ту кнопку и включать (делать ее current)
@@ -50,7 +56,16 @@ btn_scroll.click(function () {
 let firstPlayerBtn = document.querySelector(".first_player-btn"),
     secondPlayerBtn = document.querySelector(".second_player-btn"),
     playerFirst = document.querySelector(".player_first"),
-    playerSecond = document.querySelector(".second_player")
+    playerSecond = document.querySelector(".second_player"),
+    activeBtn = document.querySelector(".tabs-box .current")
+
+if (activeBtn.textContent == firstPlayerBtn.textContent) {
+    playerFirst.classList.add("current")
+    playerSecond.classList.remove("current")
+} else if (activeBtn.textContent == secondPlayerBtn.textContent) {
+    playerFirst.classList.remove("current")
+    playerSecond.classList.add("current")
+}
 
 firstPlayerBtn.addEventListener("click", () => {
     firstPlayerBtn.classList.add("current")

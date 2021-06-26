@@ -9,8 +9,8 @@
 @section("description", "Кинозверь - Смотрите новые фильмы и сериалы в отличном качестве онлайн без регестрации (у нас их более 15000)")
 
 @section("content")
-
     @include("parts.main.short-header-main")
+    <h2 style="margin-bottom: 20px; font-size: 34px">Ваш список ибранных фильмов</h2>
     <div class="movies">
         <div class="list__movies" style="transition: opacity .3s linear">
             @if($movies->count() > 0)
@@ -26,15 +26,14 @@
                                 <div class="short__original__title">{{ $movie->original_title }}</div>
                                 <div class="movie__action">
                                     @if($movie->likes > 0)
-                                        <span style="margin-top: 18px;margin-right: 10px;font-size: 16px;" id="likes_count">{{ $movie->likes }}</span>
+                                        <span style="margin-top: 18px;margin-right: 10px;font-size: 16px;">
+                                            {{ $movie->likes }}
+                                        </span>
                                     @endif
                                     <div class="movie__action-item movie__like-btn"
                                          onclick="addLike('{{ route("api.addLikeMovie") . "?movie_id=$movie->id" }}')">
                                         <i class="fa fa-thumbs-up"></i>
                                     </div>
-                                    @if($movie->dislikes > 0)
-                                        <span style="margin-top: 18px;margin-right: 10px;font-size: 16px;" id="dislikes_count">{{ $movie->dislikes }}</span>
-                                    @endif
                                     <div class="movie__action-item movie__dislike-btn"
                                          onclick="addDislike('{{ route("api.addDislikeMovie") . "?movie_id=$movie->id" }}')">
                                         <i class="fa fa-thumbs-down"></i>
@@ -72,26 +71,17 @@
 
                                     <div class="short__bottom fx-row fx-middle">
                                         @auth
-                                            @php($favoriteMovie = \App\Models\FavoriteMovie::where("movie_id", "=", $movie->id)->where("user_id", "=", auth()->user()->id)->first())
-                                            @if($favoriteMovie != null)
-                                                <form
-                                                    action="{{ route("movies.favoriteDelete", $favoriteMovie->f_id) }}"
-                                                    method="post">
+                                            <a id="add__to-favorite" onclick="addToFavorite({{ $movie->kinopoisk_id }})"
+                                               href="#">
+                                                <form action="{{ route("movies.favoriteDelete", $movie->f_id) }}"
+                                                      method="post">
                                                     @csrf
                                                     <button type="submit" class="short-fav"
                                                             title="удалить из избранного">
                                                         <span class="fa fa-minus-square"></span> Удалить из избранного
                                                     </button>
                                                 </form>
-                                            @else
-                                                <form action="{{ route("movies.favoriteAdd", $movie->id) }}"
-                                                      method="post">
-                                                    @csrf
-                                                    <button type="submit" class="short-fav" title="в избранное">
-                                                        <span class="fa fa-plus-square"></span> В избранное
-                                                    </button>
-                                                </form>
-                                            @endif
+                                            </a>
                                         @endauth
                                         @guest
                                             <a></a>
@@ -113,7 +103,7 @@
                 <div class="berrors">
                     <b>Информация</b>
                     <br>
-                    {{ "К сожалению фильмов не найдено" }}
+                    {{ "У вас нет фильмов в избранном списке" }}
                 </div>
             @endif
         </div>
@@ -174,7 +164,22 @@
         listBtn.style.background = "#fd6500"
         listBtn.style.color = "#fff"
 
-        if (window.screen.width <= 780) {
+        listBtn.addEventListener("click", () => {
+            listMovies.classList.remove("hidden")
+            gridMovies.classList.add("hidden")
+
+            listMovies.style.display = "block"
+            listMovies.style.opacity = "1"
+            gridMovies.style.opacity = "0"
+            gridMovies.style.display = "none"
+
+            listBtn.style.background = "#fd6500"
+            listBtn.style.color = "#fff"
+
+            gridBtn.style.background = "none"
+
+        })
+        gridBtn.addEventListener("click", () => {
             listMovies.classList.add("hidden")
             gridMovies.classList.remove("hidden")
 
@@ -188,40 +193,9 @@
 
             listBtn.style.background = "none"
             listBtn.style.color = "#fff"
-        } else {
-            listBtn.addEventListener("click", () => {
-                listMovies.classList.remove("hidden")
-                gridMovies.classList.add("hidden")
-
-                listMovies.style.display = "block"
-                listMovies.style.opacity = "1"
-                gridMovies.style.opacity = "0"
-                gridMovies.style.display = "none"
-
-                listBtn.style.background = "#fd6500"
-                listBtn.style.color = "#fff"
-
-                gridBtn.style.background = "none"
-
-            })
-            gridBtn.addEventListener("click", () => {
-                listMovies.classList.add("hidden")
-                gridMovies.classList.remove("hidden")
-
-                gridMovies.style.display = "flex"
-                gridMovies.style.opacity = "1"
-                listMovies.style.opacity = "0"
-                listMovies.style.display = "none"
-
-                gridBtn.style.background = "#fd6500"
-                gridBtn.style.color = "#fff"
-
-                listBtn.style.background = "none"
-                listBtn.style.color = "#fff"
-            })
-        }
+        })
 
         let loader = document.querySelector(".loader")
+        // loader.remove()
     </script>
-
 @endsection

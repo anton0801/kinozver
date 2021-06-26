@@ -22,8 +22,8 @@
 <footer class="footer wrap-center fx-row fx-middle">
     <div class="footer-menu">
         <a href="/pravoobladateli.html" rel="nofollow">Правообладателям</a>
-        <a href="/index.php?do=feedback" rel="nofollow">Контакты</a>
-        <a href="#" rel="nofollow">Размещение рекламы</a>
+        <a href="{{ route("feedback") }}" rel="nofollow">Контакты</a>
+        <a href="{{ route("reclam") }}" rel="nofollow">Размещение рекламы</a>
     </div>
     <div class="footer-right">
         <noindex><span>{{ getUsersInOnline() }}</span></noindex> онлайн

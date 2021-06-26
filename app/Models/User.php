@@ -20,6 +20,8 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    protected $dates = ['to_time_premium'];
+
     /**
      * The attributes that should be hidden for arrays.
      *

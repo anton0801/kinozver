@@ -28,13 +28,12 @@
                     <a href="{{ route("show.movie", $movie->kinopoisk_id) }}" class="search__movie clearfix">
                         <div class="movie__wrapper">
                             <div class="search__image">
-                                <div
-                                    class="movie__date">{{ date("d-m-yy", $movie->date) }}</div>
+                                <div class="movie__date">{{ getTime($movie) }}</div>
                                 <img src="{{ $movie->poster }}" alt="Фото {{ $movie->title }}">
                             </div>
                             <div class="search__movie-info">
                                 <h2>{{ $movie->title }}</h2>
-                                <span class="movie__description">{{ $movie->description }}</span>
+                                <span class="movie__description">{!! $movie->description  !!}</span>
                             </div>
                         </div>
                     </a>

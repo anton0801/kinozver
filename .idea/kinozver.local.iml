@@ -124,14 +124,13 @@
     <orderEntry type="library" name="adsbygoogle" level="application" />
     <orderEntry type="library" name="OwlCarousel2" level="application" />
     <orderEntry type="library" name="OwlCarousel2" level="application" />
-    <orderEntry type="library" name="all" level="application" />
-    <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" name="swiper" level="application" />
     <orderEntry type="library" name="slick" level="application" />
-    <orderEntry type="library" name="firebase-app" level="application" />
     <orderEntry type="library" name="firebase-analytics" level="application" />
     <orderEntry type="library" name="firebase-auth" level="application" />
-    <orderEntry type="library" name="firebase-database" level="application" />
     <orderEntry type="library" name="firebase-storage" level="application" />
+    <orderEntry type="library" name="slick-carousel" level="application" />
+    <orderEntry type="library" name="@editorjs" level="application" />
+    <orderEntry type="library" name="ckeditor" level="application" />
   </component>
 </module>

@@ -13,14 +13,14 @@
                     <li class="logged__link">
                         <a href="#">
                             <div class="login-av img-box">
-                                <img src="{{ asset("images/noavatar.png") }}" alt="UserName">
+                                <img src="{{ auth()->user()->avatarUrl }}" alt="UserName">
                             </div>
                         </a>
                     </li>
                     <li class="logged__link">
-                        <a href="#">
+                        <a href="{{ route("movies.favorite", auth()->user()->id) }}">
                             <span class="fa fa-heart"></span>
-                            <div class="login__count">1</div>
+                            <div class="login__count">{{ App\Models\FavoriteMovie::where("user_id", "=", auth()->user()->id)->get()->count() ?? 0 }}</div>
                         </a>
                     </li>
                     @if(\Illuminate\Support\Facades\Auth::user()->role == "admin")

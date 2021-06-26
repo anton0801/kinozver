@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Movie;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class SearchController extends Controller
@@ -53,6 +55,26 @@ class SearchController extends Controller
         } else {
             $movies = $this->getMoviesByCategory($genre);
         }
+        return view("home", compact("movies"));
+    }
+
+    public function filterYear($year)
+    {
+        $movies = $this->getMoviesByYear($year);
+        return view("home", compact("movies"));
+    }
+
+    public function filterCountry($country)
+    {
+        $movies = $this->getMoviesByCountry($country);
+        return view("home", compact("movies"));
+    }
+
+    public function filterActor($actor)
+    {
+        $movies = Movie::where("actors", "LIKE", "%$actor%")
+            ->orderBy("id", "desc")
+            ->paginate(12);
         return view("home", compact("movies"));
     }
 
